@@ -2,6 +2,7 @@
 
 import datetime
 
+from flask import request
 from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
@@ -13,36 +14,41 @@ from api.config import Config
 from api.models.cpu import CPU
 
 config = Config()
-# psutil_cpu_info = CPUInfo(config)
 
 CPUInfoPrint = Blueprint("cpu_print", __name__, url_prefix="/api/cpu")
 
 
-@CPUInfoPrint.route("/info", methods=["GET"])
+@CPUInfoPrint.route("/info", methods=["POST"])
 @jwt_required()
 def cpu_info():
     try:
-        # cpu_data, target = psutil_cpu_info.cpu_data()
+        if not "cpu_data" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: cpu_data"}), 400
         
-        # percents=[]
-        # for cpu_id, cpu_percent in cpu_data.items():
-        #     percents.append(f"{cpu_id}:{cpu_percent}")
+        if not "target" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: target"}), 400
+
+        cpu_data = request.json["cpu_data"]
+        target = request.json["target"]
+
+        percents = []
+        for cpu_id, cpu_percent in cpu_data.items():
+            percents.append(f"{cpu_id}:{cpu_percent}")
     
-        # record = CPU(
-        #     target=target,
-        #     timestamp=datetime.datetime.now(),
-        #     percents=", ".join(percents),
-        # )
+        record = CPU(
+            target=target,
+            timestamp=datetime.datetime.now(),
+            percents=", ".join(percents),
+        )
 
-        # db.session.add(record)
-        # db.session.commit()
+        db.session.add(record)
+        db.session.commit()
 
-        # return jsonify({"cpu_info": cpu_data}), 200
-        return jsonify({"cpu_info": []}), 200
+        return jsonify({"msg": "Successfully uploaded cpu info."}), 200
 
     except Exception as err:
         config.log.error(f"Unable to provide CPU information. Error: {err}.")
-        return jsonify({"error_message": "Unable to provide CPU information"}), 500
+        return jsonify({"error_message": "Unable to provide CPU information"})
 
 
 @CPUInfoPrint.route("/processes", methods=["GET"])

@@ -2,7 +2,7 @@
 
 from datetime import datetime, timezone
 
-from flask import url_for, jsonify, redirect, request
+from flask import jsonify, request
 from flask import Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
 

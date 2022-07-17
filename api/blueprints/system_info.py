@@ -2,11 +2,10 @@
 
 import datetime
 
+from flask import request
 from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
-
-# from SysAgent.SysAgentCore.system import SystemInfo
 
 from api.extensions import db
 from api.config import Config
@@ -16,27 +15,33 @@ from api.models.system import SystemOper
 
 
 config = Config()
-# psutil_system_info = SystemInfo(config)
 
 SystemInfoPrint = Blueprint("system_print", __name__, url_prefix="/api/system")
 
 
-@SystemInfoPrint.route("/os", methods=["GET"])
+@SystemInfoPrint.route("/os", methods=["POST"])
 @jwt_required()
 def operating_system():
     try:
-        # operating_system, target = psutil_system_info.operating_system()
-        # record = SystemOper(
-        #     target=target,
-        #     timestamp=datetime.datetime.now(),
-        #     opersys=operating_system
-        # )
+        if not "os" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: os"}), 400
         
-        # db.session.add(record)
-        # db.session.commit()
+        if not "target" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: target"}), 400
 
-        # return jsonify({"operating_system": operating_system}), 200
-        return jsonify({"operating_system": []}), 200
+        operating_system = request.json["os"]
+        target = request.json["target"]
+
+        record = SystemOper(
+            target=target,
+            timestamp=datetime.datetime.now(),
+            opersys=operating_system
+        )
+        
+        db.session.add(record)
+        db.session.commit()
+
+        return jsonify({"msg": "Successfully uploaded operating system info."}), 200
 
     except Exception as err:
         config.log.error(
@@ -45,49 +50,62 @@ def operating_system():
         return jsonify({"error": "Unable to provide operating system information"}), 500
 
 
-@SystemInfoPrint.route("/uptime", methods=["GET"])
+@SystemInfoPrint.route("/uptime", methods=["POST"])
 @jwt_required()
 def up_time():
     try:
-        # uptime, target = psutil_system_info.uptime()
+        if not "uptime" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: uptime"}), 400
         
-        # record = SystemUptime(
-        #     target=target,
-        #     timestamp=datetime.datetime.now(),
-        #     uptime=uptime
-        # )
+        if not "target" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: target"}), 400
 
-        # db.session.add(record)
-        # db.session.commit()
+        uptime = request.json["uptime"]
+        target = request.json["target"]
 
-        # return jsonify({"uptime": str(uptime)}), 200
-        return jsonify({"uptime": []}), 200
+        record = SystemUptime(
+            target=target,
+            timestamp=datetime.datetime.now(),
+            uptime=uptime
+        )
+
+        db.session.add(record)
+        db.session.commit()
+
+        return jsonify({"msg": "Successfully uploaded uptime info."}), 200
 
     except Exception as err:
         config.log.error(f"Unable to provide uptime information. Error: {err}.")
         return jsonify({"error": "Unable to provide uptime information"}), 500
 
 
-@SystemInfoPrint.route("/users", methods=["GET"])
+@SystemInfoPrint.route("/users", methods=["POST"])
 @jwt_required()
 def user_info():
     try:
-        # user_data, target = psutil_system_info.users()
-        # for user in user_data:
-        #     record = SystemUser(
-        #         target=target,
-        #         timestamp=datetime.datetime.now(),
-        #         started=user['started'],
-        #         terminal=user['terminal'],
-        #         username=user['user_name']
-        #     )
+        if not "users" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: users"}), 400
+        
+        if not "target" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: target"}), 400
 
-        #     db.session.add(record)
+        users = request.json["users"]
+        target = request.json["target"]
 
-        # db.session.commit()
+        for user in users:
+            record = SystemUser(
+                target=target,
+                timestamp=datetime.datetime.now(),
+                started=user['started'],
+                terminal=user['terminal'],
+                username=user['user_name']
+            )
 
-        # return jsonify({"user_info": user_data}), 200
-        return jsonify({"user_info": []}), 200
+            db.session.add(record)
+
+        db.session.commit()
+
+        return jsonify({"msg": "Successfully uploaded users info."}), 200
 
     except Exception as err:
         config.log.error(f"Unable to provide user information. Error: {err}.")
