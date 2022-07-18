@@ -7,8 +7,6 @@ from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
 
-# from SysAgent.SysAgentCore.cpu import CPUInfo
-
 from api.extensions import db
 from api.config import Config
 from api.models.cpu import CPU
@@ -28,6 +26,10 @@ def cpu_info():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         cpu_data = request.json["cpu_data"]
         target = request.json["target"]
 
@@ -37,6 +39,7 @@ def cpu_info():
     
         record = CPU(
             target=target,
+            report_id=report_id,
             timestamp=datetime.datetime.now(),
             percents=", ".join(percents),
         )

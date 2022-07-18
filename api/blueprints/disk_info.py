@@ -27,12 +27,17 @@ def disk_info():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         disk_data = request.json["disk_data"]
         target = request.json["target"]
 
         for disk in disk_data:
             record = Disk(
                 target=target,
+                report_id=report_id,
                 timestamp=datetime.datetime.now(),
                 mount_point = disk['mount_point'],
                 total = disk['total'],

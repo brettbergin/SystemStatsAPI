@@ -15,6 +15,7 @@ from api.models.users import User
 
 mock_memory = {
     "target": "mock-hostname.local",
+    "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
     "timestamp": '22-07-10 15:31:11',
     "active": "12.69 GB",
     "available": "16.41 GB",
@@ -27,6 +28,7 @@ mock_memory = {
 }
 mock_disk = {
       "target": "mock-hostname.local",
+      "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
       "timestamp": '22-07-10 15:31:11',
       "free": "1.27 TB",
       "mount_point": "/",
@@ -36,11 +38,13 @@ mock_disk = {
 }
 mock_cpu = {
   "target": "mock-hostname.local",
+  "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
   "timestamp": '22-07-10 15:31:11',
   "percents": "CPU_1:20.8, CPU_2:0.0, CPU_3:20.8, CPU_4:0.0"
 }
 mock_network_info = {
   "target": "mock-hostname.local",
+  "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
   "timestamp": '22-07-10 15:31:11',
   "bytes_recvd": "2.71 GB",
   "bytes_sent": "2.27 GB",
@@ -53,11 +57,13 @@ mock_network_info = {
 }
 mock_network_ips = {
   "target": "mock-hostname.local",
+  "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
   "timestamp": '22-07-10 15:31:11',
   "addresses": "l0:127.0.0.1, en0:192.168.1.100"
 }
 mock_system_users = {
   "target": "mock-hostname.local",
+  "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
   "timestamp": '22-07-10 15:31:11',
   "started": "2022-06-01 18:50:56",
   "terminal": "console",
@@ -65,11 +71,13 @@ mock_system_users = {
 }
 mock_system_uptime = {
   "target": "mock-hostname.local",
+  "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
   "timestamp": '22-07-10 15:31:11',
   "uptime": "38 days, 22:13:38.350826"
 }
 mock_operating_system = {
   "target": "mock-hostname.local",
+  "report_id": "ad536b7e-ce43-4118-b017-aae62fb346da",
   "timestamp": '22-07-10 15:31:11',
   "opersys": "macOS-12.3.1-x86_64-i386-64bit"
 }

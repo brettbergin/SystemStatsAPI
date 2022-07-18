@@ -10,6 +10,7 @@ class SystemUser(db.Model):
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
+    report_id = db.Column(db.String(36), nullable=False)
     target = db.Column(db.String(255), nullable=False)
     started = db.Column(db.DateTime, nullable=False)
     terminal = db.Column(db.String(255), nullable=False)
@@ -24,6 +25,7 @@ class SystemUptime(db.Model):
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
+    report_id = db.Column(db.String(36), nullable=False)
     target = db.Column(db.String(255), nullable=False)
     uptime = db.Column(db.String(255), nullable=False)
 
@@ -36,6 +38,7 @@ class SystemOper(db.Model):
     
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
+    report_id = db.Column(db.String(36), nullable=False)
     target = db.Column(db.String(255), nullable=False)
     opersys = db.Column(db.String(255), nullable=False)
 

@@ -28,6 +28,10 @@ def ip_address():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         incoming_ips = request.json["ips"]
         target = request.json["target"]
 
@@ -38,6 +42,7 @@ def ip_address():
 
         record = NetworkIp(
             target=target,
+            report_id=report_id,
             timestamp=datetime.datetime.now(),
             addresses=", ".join(ips)
         )
@@ -62,11 +67,16 @@ def network_info():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         network_data = request.json["network_data"]
         target = request.json["target"]
 
         record = NetworkInfo(
             target=target,
+            report_id=report_id,
             timestamp=datetime.datetime.now(),
             bytes_sent = network_data['bytes_sent'],
             bytes_recvd = network_data['bytes_recvd'],

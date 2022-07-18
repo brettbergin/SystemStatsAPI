@@ -29,15 +29,20 @@ def operating_system():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         operating_system = request.json["os"]
         target = request.json["target"]
 
         record = SystemOper(
             target=target,
+            report_id=report_id,
             timestamp=datetime.datetime.now(),
             opersys=operating_system
         )
-        
+
         db.session.add(record)
         db.session.commit()
 
@@ -60,11 +65,16 @@ def up_time():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         uptime = request.json["uptime"]
         target = request.json["target"]
 
         record = SystemUptime(
             target=target,
+            report_id=report_id,
             timestamp=datetime.datetime.now(),
             uptime=uptime
         )
@@ -89,12 +99,17 @@ def user_info():
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
+        if not "report_id" in request.json.keys():
+            return jsonify({"msg": "Missing request parameter: report_id"}), 400
+
+        report_id = request.json["report_id"]
         users = request.json["users"]
         target = request.json["target"]
 
         for user in users:
             record = SystemUser(
                 target=target,
+                report_id=report_id,
                 timestamp=datetime.datetime.now(),
                 started=user['started'],
                 terminal=user['terminal'],

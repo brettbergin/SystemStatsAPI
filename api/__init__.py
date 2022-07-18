@@ -13,6 +13,8 @@ from api.blueprints.disk_info import DiskInfoPrint
 from api.blueprints.network_info import NetworkInfoPrint
 from api.blueprints.system_info import SystemInfoPrint
 from api.blueprints.base import BasePrint
+from api.blueprints.reports import ReportsBluePrint
+
 
 
 class InitApp(object):
@@ -42,6 +44,7 @@ class InitApp(object):
         self._internal_app.register_blueprint(NetworkInfoPrint)
         self._internal_app.register_blueprint(SystemInfoPrint)
         self._internal_app.register_blueprint(BasePrint)
+        self._internal_app.register_blueprint(ReportsBluePrint)
 
     def create_app(self):
         self._internal_app = Flask(__name__)

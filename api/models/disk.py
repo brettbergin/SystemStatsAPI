@@ -10,6 +10,7 @@ class Disk(db.Model):
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
+    report_id = db.Column(db.String(36), nullable=False)
     target = db.Column(db.String(255), nullable=False)
     mount_point = db.Column(db.String(20), nullable=False)
     total = db.Column(db.String(20), nullable=False)
