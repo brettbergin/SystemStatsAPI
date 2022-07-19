@@ -6,7 +6,7 @@ from api.extensions import db
 
 
 class Disk(db.Model):
-    __tablename__ = 'disk'
+    __tablename__ = "disk"
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)

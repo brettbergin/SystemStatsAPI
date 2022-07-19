@@ -24,7 +24,7 @@ def cpu_info():
     try:
         if not "cpu_data" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: cpu_data"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -38,7 +38,7 @@ def cpu_info():
         percents = []
         for cpu_id, cpu_percent in cpu_data.items():
             percents.append(f"{cpu_id}:{cpu_percent}")
-    
+
         record = CPU(
             target=target,
             report_id=report_id,
@@ -62,7 +62,7 @@ def process_info():
     try:
         if not "process_data" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: process_data"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -82,30 +82,34 @@ def process_info():
             proc_exe = process.get("executable")
             proc_cpu_percent = process.get("cpu_percent")
 
-            open_files = ", ".join([p.__str__() for p in process["open_files"]]) \
-                if process.get("open_files") \
+            open_files = (
+                ", ".join([p.__str__() for p in process["open_files"]])
+                if process.get("open_files")
                 else None
-        
-            connections = ", ".join([p.__str__() for p in process["connections"]]) \
-                if process.get("connections") \
-                else None
-        
-            threads = ", ".join([p.__str__() for p in process["threads"]]) \
-                if process.get("threads") \
-                else None
+            )
 
-            mem_info = ", ".join(str(process["mem_info"])) \
-                if process.get("mem_info") \
+            connections = (
+                ", ".join([p.__str__() for p in process["connections"]])
+                if process.get("connections")
                 else None
+            )
 
-            cli = ", ".join(process["cli"]) \
-                if process.get("cli") \
+            threads = (
+                ", ".join([p.__str__() for p in process["threads"]])
+                if process.get("threads")
                 else None
+            )
+
+            mem_info = (
+                ", ".join(str(process["mem_info"])) if process.get("mem_info") else None
+            )
+
+            cli = ", ".join(process["cli"]) if process.get("cli") else None
 
             existing_process = Process.query.filter(
-                Process.name==proc_name, 
-                Process.pid==proc_pid, 
-                Process.user==proc_user
+                Process.name == proc_name,
+                Process.pid == proc_pid,
+                Process.user == proc_user,
             ).first()
 
             if not existing_process:
@@ -124,7 +128,7 @@ def process_info():
                     mem_info=mem_info,
                     open_files=open_files,
                     connections=connections,
-                    threads=threads
+                    threads=threads,
                 )
                 db.session.add(new_process)
             else:

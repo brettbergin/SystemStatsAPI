@@ -23,7 +23,7 @@ def memory_info_route():
     try:
         if not "mem_data" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: mem_data"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -35,17 +35,17 @@ def memory_info_route():
         target = request.json["target"]
 
         record = Memory(
-            active=mem_data['active'],
+            active=mem_data["active"],
             target=target,
             report_id=report_id,
             timestamp=datetime.datetime.now(),
-            available=mem_data['available_memory'],
-            free=mem_data['free'],
-            inactive=mem_data['inactive'],
-            percent=mem_data['percent'],
-            total=mem_data['total_memory'],
-            used=mem_data['used'],
-            wired=mem_data['wired']
+            available=mem_data["available_memory"],
+            free=mem_data["free"],
+            inactive=mem_data["inactive"],
+            percent=mem_data["percent"],
+            total=mem_data["total_memory"],
+            used=mem_data["used"],
+            wired=mem_data["wired"],
         )
 
         db.session.add(record)

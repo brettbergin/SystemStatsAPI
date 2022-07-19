@@ -4,8 +4,9 @@ import uuid
 
 from api.extensions import db
 
+
 class CPU(db.Model):
-    __tablename__ = 'cpu'
+    __tablename__ = "cpu"
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
