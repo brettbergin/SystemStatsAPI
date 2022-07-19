@@ -6,7 +6,7 @@ from api.extensions import db
 
 
 class Memory(db.Model):
-    __tablename__ = 'memory'
+    __tablename__ = "memory"
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)

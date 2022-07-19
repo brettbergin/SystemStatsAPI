@@ -25,7 +25,7 @@ def operating_system():
     try:
         if not "os" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: os"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -40,7 +40,7 @@ def operating_system():
             target=target,
             report_id=report_id,
             timestamp=datetime.datetime.now(),
-            opersys=operating_system
+            opersys=operating_system,
         )
 
         db.session.add(record)
@@ -61,7 +61,7 @@ def up_time():
     try:
         if not "uptime" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: uptime"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -76,7 +76,7 @@ def up_time():
             target=target,
             report_id=report_id,
             timestamp=datetime.datetime.now(),
-            uptime=uptime
+            uptime=uptime,
         )
 
         db.session.add(record)
@@ -95,7 +95,7 @@ def user_info():
     try:
         if not "users" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: users"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -111,9 +111,9 @@ def user_info():
                 target=target,
                 report_id=report_id,
                 timestamp=datetime.datetime.now(),
-                started=user['started'],
-                terminal=user['terminal'],
-                username=user['user_name']
+                started=user["started"],
+                terminal=user["terminal"],
+                username=user["user_name"],
             )
 
             db.session.add(record)

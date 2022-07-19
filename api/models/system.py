@@ -6,7 +6,7 @@ from api.extensions import db
 
 
 class SystemUser(db.Model):
-    __tablename__ = 'system_users'
+    __tablename__ = "system_users"
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
@@ -21,7 +21,7 @@ class SystemUser(db.Model):
 
 
 class SystemUptime(db.Model):
-    __tablename__ = 'system_uptime'
+    __tablename__ = "system_uptime"
 
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
@@ -34,8 +34,8 @@ class SystemUptime(db.Model):
 
 
 class SystemOper(db.Model):
-    __tablename__ = 'operating_system'
-    
+    __tablename__ = "operating_system"
+
     id = db.Column(db.String(36), default=lambda: str(uuid.uuid4()), primary_key=True)
     timestamp = db.Column(db.DateTime, nullable=False)
     report_id = db.Column(db.String(36), nullable=False)

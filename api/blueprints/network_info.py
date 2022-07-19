@@ -24,7 +24,7 @@ def ip_address():
     try:
         if not "ips" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: ips"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -36,7 +36,7 @@ def ip_address():
         target = request.json["target"]
 
         ips = []
-        for interface in incoming_ips['interfaces']:
+        for interface in incoming_ips["interfaces"]:
             for k, v in interface.items():
                 ips.append(f"{k}:{v}")
 
@@ -44,7 +44,7 @@ def ip_address():
             target=target,
             report_id=report_id,
             timestamp=datetime.datetime.now(),
-            addresses=", ".join(ips)
+            addresses=", ".join(ips),
         )
 
         db.session.add(record)
@@ -63,7 +63,7 @@ def network_info():
     try:
         if not "network_data" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: network_data"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -78,19 +78,19 @@ def network_info():
             target=target,
             report_id=report_id,
             timestamp=datetime.datetime.now(),
-            bytes_sent = network_data['bytes_sent'],
-            bytes_recvd = network_data['bytes_recvd'],
-            packets_sent = network_data['packets_sent'],
-            packets_recvd = network_data['packets_recvd'],
-            err_pkt_in = network_data['err_pkt_in'],
-            err_pkt_out = network_data['err_pkt_out'],
-            dropped_pkt_in = network_data['dropped_pkt_in'],
-            dropped_pkt_out = network_data['dropped_pkt_out'],
+            bytes_sent=network_data["bytes_sent"],
+            bytes_recvd=network_data["bytes_recvd"],
+            packets_sent=network_data["packets_sent"],
+            packets_recvd=network_data["packets_recvd"],
+            err_pkt_in=network_data["err_pkt_in"],
+            err_pkt_out=network_data["err_pkt_out"],
+            dropped_pkt_in=network_data["dropped_pkt_in"],
+            dropped_pkt_out=network_data["dropped_pkt_out"],
         )
 
         db.session.add(record)
         db.session.commit()
-    
+
         return jsonify({"msg": "Successfully uploaded network info."}), 200
 
     except Exception as err:

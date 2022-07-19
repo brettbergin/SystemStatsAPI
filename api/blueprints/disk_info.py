@@ -23,7 +23,7 @@ def disk_info():
     try:
         if not "disk_data" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: disk_data"}), 400
-        
+
         if not "target" in request.json.keys():
             return jsonify({"msg": "Missing request parameter: target"}), 400
 
@@ -39,11 +39,11 @@ def disk_info():
                 target=target,
                 report_id=report_id,
                 timestamp=datetime.datetime.now(),
-                mount_point = disk['mount_point'],
-                total = disk['total'],
-                used = disk['used'],
-                free = disk['free'],
-                percent = disk['percent']
+                mount_point=disk["mount_point"],
+                total=disk["total"],
+                used=disk["used"],
+                free=disk["free"],
+                percent=disk["percent"],
             )
             db.session.add(record)
         db.session.commit()

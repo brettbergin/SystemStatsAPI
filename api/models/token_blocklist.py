@@ -23,11 +23,10 @@ class TokenBlocklist(db.Model):
     jti = db.Column(db.String(36), nullable=False, index=True)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
     type = db.Column(db.String(16), nullable=True)
-    
+
     user_id = db.Column(
-        db.ForeignKey('users.id'),
-        default=lambda: get_current_user().id,
-        nullable=False)
+        db.ForeignKey("users.id"), default=lambda: get_current_user().id, nullable=False
+    )
 
     def __repr__(self):
         return f"<TokenBlocklist {self.id}>"
