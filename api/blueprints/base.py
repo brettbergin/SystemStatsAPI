@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from flask import jsonify, request
 from flask import Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import cross_origin
 
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import create_access_token
@@ -34,6 +35,7 @@ def home():
 
 
 @BasePrint.route("/authenticate", methods=["POST"])
+@cross_origin()
 def login():
     # If there is no JSON request body, issue 400.
     if not request.json:

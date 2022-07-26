@@ -24,6 +24,22 @@ class NetworkInfo(db.Model):
     def __repr__(self):
         return f"<NetworkInfo {self.id}>"
 
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "bytes_sent": self.bytes_sent,
+            "bytes_recvd": self.bytes_recvd,
+            "packets_sent": self.packets_sent,
+            "packets_recvd": self.packets_recvd,
+            "err_pkt_in": self.err_pkt_in,
+            "err_pkt_out": self.err_pkt_out,
+            "dropped_pkt_in": self.dropped_pkt_in,
+            "dropped_pkt_out": self.dropped_pkt_out,
+        }
+
 
 class NetworkIp(db.Model):
     __tablename__ = "network_ips"
@@ -36,3 +52,12 @@ class NetworkIp(db.Model):
 
     def __repr__(self):
         return f"<NetworkIp {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "report_id": self.report_id,
+            "timestamp": self.timestamp,
+            "target": self.target,
+            "addresses": self.addresses,
+        }

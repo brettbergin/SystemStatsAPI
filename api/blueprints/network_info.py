@@ -6,6 +6,7 @@ from flask import request
 from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
+from flask_cors import cross_origin
 
 from api.extensions import db
 from api.config import Config
@@ -55,6 +56,20 @@ def ip_address():
     except Exception as err:
         config.log.error(f"Unable to provide IP information. Error: {err}")
         return jsonify({"error": "Unable to provide IP information"}), 500
+
+
+@NetworkInfoPrint.route("/list", methods=["GET"])
+@cross_origin()
+@jwt_required()
+def fetch_network_info():
+    try:
+        network_info = NetworkInfo.query.all()
+        serialized_network_info = [n.obj_to_dict() for n in network_info]
+        return jsonify(serialized_network_info), 200
+
+    except Exception as err:
+        config.log.error(f"Unable to provide network information. Error: {err}.")
+        return jsonify({"error_message": "Unable to provide network information"})
 
 
 @NetworkInfoPrint.route("/info", methods=["POST"])

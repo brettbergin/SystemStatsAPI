@@ -28,3 +28,23 @@ class Process(db.Model):
 
     def __repr__(self):
         return f"<Process {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "name": self.name,
+            "pid": self.pid,
+            "user": self.user,
+            "status": self.status,
+            "create_time": self.create_time,
+            "cli": self.cli,
+            "executable": self.executable,
+            "cpu_percent": self.cpu_percent,
+            "mem_info": self.mem_info,
+            "open_files": self.open_files,
+            "connections": self.connections,
+            "threads": self.threads,
+        }

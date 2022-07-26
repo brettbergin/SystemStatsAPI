@@ -4,6 +4,7 @@ from datetime import timedelta
 
 
 from flask import Flask
+from flask_cors import CORS
 
 from api.extensions import db, jwt, rate_limit
 from api.config import Config
@@ -34,6 +35,12 @@ class InitApp(object):
         rate_limit.init_app(self._internal_app)
         jwt.init_app(self._internal_app)
         db.init_app(self._internal_app)
+        CORS(
+            self._internal_app, resources={
+                "/authenticate": {"origins": "http://localhost:8888/"},
+                "/api/network/list": {"origins": "http://localhost:8888/"}
+            }
+        )
 
     def _register_blue_prints(self):
         self._internal_app.register_blueprint(MemoryInfoPrint)

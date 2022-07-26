@@ -18,3 +18,12 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "username": self.username,
+            "email": self.email,
+            "password": self.password,
+            "jwt_issue_count": self.jwt_issue_count,
+            "email_verified": self.email_verified,   
+        }

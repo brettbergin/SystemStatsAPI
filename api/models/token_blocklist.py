@@ -30,3 +30,11 @@ class TokenBlocklist(db.Model):
 
     def __repr__(self):
         return f"<TokenBlocklist {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "jti": self.jti,
+            "created_at": self.created_at,
+            "type": self.type,           
+        }

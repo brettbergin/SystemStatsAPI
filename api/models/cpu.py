@@ -16,3 +16,12 @@ class CPU(db.Model):
 
     def __repr__(self):
         return f"<CPU {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "percents": self.percents,
+        }

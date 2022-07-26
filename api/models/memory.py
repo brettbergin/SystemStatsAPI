@@ -23,3 +23,19 @@ class Memory(db.Model):
 
     def __repr__(self):
         return f"<Memory {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "active": self.active,
+            "available": self.available,
+            "free": self.free,
+            "inactive": self.inactive,
+            "percent": self.percent,
+            "total": self.total,
+            "user": self.used,
+            "wired": self.wired,
+        }

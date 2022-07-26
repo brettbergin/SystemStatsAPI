@@ -20,3 +20,16 @@ class Disk(db.Model):
 
     def __repr__(self):
         return f"<Disk {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "mount_point": self.mount_point,
+            "total": self.total,
+            "used": self.used,
+            "free": self.free,
+            "percent": self.percent,
+        }

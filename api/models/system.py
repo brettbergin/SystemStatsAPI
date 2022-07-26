@@ -19,6 +19,17 @@ class SystemUser(db.Model):
     def __repr__(self):
         return f"<SystemUser {self.id}>"
 
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "started": self.started,
+            "terminal": self.terminal,
+            "username": self.username,
+
+        }
 
 class SystemUptime(db.Model):
     __tablename__ = "system_uptime"
@@ -32,6 +43,14 @@ class SystemUptime(db.Model):
     def __repr__(self):
         return f"<SystemUptime {self.id}>"
 
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "uptime": self.uptime,
+        }
 
 class SystemOper(db.Model):
     __tablename__ = "operating_system"
@@ -44,3 +63,12 @@ class SystemOper(db.Model):
 
     def __repr__(self):
         return f"<SystemOper {self.id}>"
+
+    def obj_to_dict(self):
+        return {
+            "id": self.id,
+            "timestamp": self.timestamp,
+            "report_id": self.report_id,
+            "target": self.target,
+            "opersys": self.opersys,
+        }
