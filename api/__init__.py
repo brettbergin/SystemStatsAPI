@@ -68,7 +68,7 @@ class InitApp(object):
         self._internal_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         self._internal_app.config["SQLALCHEMY_DATABASE_URI"] = self.db_url
 
-        CORS(self._internal_app)
+        CORS(self._internal_app, resources=self.cors_resources)
 
         self._register_extensions()
         self._register_blue_prints()
