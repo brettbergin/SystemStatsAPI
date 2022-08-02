@@ -30,17 +30,15 @@ class InitApp(object):
         self.rate_limit_frequency = "50000/day;2500/hour;100/minute"
 
         self._internal_app = None
+        self.cors_resources = {
+            r"/authenticate": {"origins": "http://localhost:8888/"},
+            r"/api/network/list": {"origins": "http://localhost:8888/"}
+        }
 
     def _register_extensions(self):
         rate_limit.init_app(self._internal_app)
         jwt.init_app(self._internal_app)
         db.init_app(self._internal_app)
-        CORS(
-            self._internal_app, resources={
-                "/authenticate": {"origins": "http://localhost:8888/"},
-                "/api/network/list": {"origins": "http://localhost:8888/"}
-            }
-        )
 
     def _register_blue_prints(self):
         self._internal_app.register_blueprint(MemoryInfoPrint)
@@ -69,6 +67,8 @@ class InitApp(object):
 
         self._internal_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
         self._internal_app.config["SQLALCHEMY_DATABASE_URI"] = self.db_url
+
+        CORS(self._internal_app)
 
         self._register_extensions()
         self._register_blue_prints()
