@@ -6,6 +6,7 @@ from flask import request
 from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
+from flask_cors import cross_origin
 
 from api.extensions import db
 from api.config import Config
@@ -17,6 +18,19 @@ from api.models.system import SystemOper
 config = Config()
 
 SystemInfoPrint = Blueprint("system_print", __name__, url_prefix="/api/system")
+
+@SystemInfoPrint.route("/users/list", methods=["GET"])
+@cross_origin()
+@jwt_required()
+def fetch_system_user_list():
+    try:
+        users_info = SystemUser.query.all()
+        serialized_users_info = [n.obj_to_dict() for n in users_info]
+        return jsonify(serialized_users_info), 200
+
+    except Exception as err:
+        config.log.error(f"Unable to provide users information. Error: {err}.")
+        return jsonify({"error_message": "Unable to provide users information"})
 
 
 @SystemInfoPrint.route("/os", methods=["POST"])

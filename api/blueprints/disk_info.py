@@ -6,7 +6,7 @@ from flask import request
 from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
-
+from flask_cors import cross_origin
 
 from api.extensions import db
 from api.config import Config
@@ -15,6 +15,19 @@ from api.models.disk import Disk
 config = Config()
 
 DiskInfoPrint = Blueprint("disk_print", __name__, url_prefix="/api/disk")
+
+@DiskInfoPrint.route("/list", methods=["GET"])
+@cross_origin()
+@jwt_required()
+def fetch_network_info():
+    try:
+        disk_info = Disk.query.all()
+        serialized_disk_info = [n.obj_to_dict() for n in disk_info]
+        return jsonify(serialized_disk_info), 200
+
+    except Exception as err:
+        config.log.error(f"Unable to provide disk information. Error: {err}.")
+        return jsonify({"error_message": "Unable to provide disk information"})
 
 
 @DiskInfoPrint.route("/info", methods=["POST"])

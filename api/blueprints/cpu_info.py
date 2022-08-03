@@ -6,6 +6,7 @@ from flask import request
 from flask import Blueprint
 from flask import jsonify
 from flask_jwt_extended import jwt_required
+from flask_cors import cross_origin
 
 from api.extensions import db
 from api.config import Config
@@ -16,6 +17,20 @@ from api.models.process import Process
 config = Config()
 
 CPUInfoPrint = Blueprint("cpu_print", __name__, url_prefix="/api/cpu")
+
+
+@CPUInfoPrint.route("/list", methods=["GET"])
+@cross_origin()
+@jwt_required()
+def fetch_network_info():
+    try:
+        cpu_info = CPU.query.all()
+        serialized_cpu_info = [n.obj_to_dict() for n in cpu_info]
+        return jsonify(serialized_cpu_info), 200
+
+    except Exception as err:
+        config.log.error(f"Unable to provide cpu information. Error: {err}.")
+        return jsonify({"error_message": "Unable to provide cpu information"})
 
 
 @CPUInfoPrint.route("/info", methods=["POST"])
