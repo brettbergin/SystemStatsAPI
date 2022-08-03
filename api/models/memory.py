@@ -36,6 +36,6 @@ class Memory(db.Model):
             "inactive": self.inactive,
             "percent": self.percent,
             "total": self.total,
-            "user": self.used,
+            "used": self.used,
             "wired": self.wired,
         }

@@ -48,12 +48,12 @@ mock_network_info = {
     "timestamp": "22-07-10 15:31:11",
     "bytes_recvd": "2.71 GB",
     "bytes_sent": "2.27 GB",
-    "dropped_pkt_in": "1.74 PB",
-    "dropped_pkt_out": "0 bytes",
-    "err_pkt_in": "0 bytes",
-    "err_pkt_out": "12.6 KB",
-    "packets_recvd": "262.43 MB",
-    "packets_sent": "40.51 MB",
+    "dropped_pkt_in": "363130894856524",
+    "dropped_pkt_out": "363130894856524",
+    "err_pkt_in": "118547",
+    "err_pkt_out": "363130894856524",
+    "packets_recvd": "363130894856524",
+    "packets_sent": "42384140",
 }
 mock_network_ips = {
     "target": "mock-hostname.local",
